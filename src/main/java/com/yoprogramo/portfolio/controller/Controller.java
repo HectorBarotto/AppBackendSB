@@ -15,6 +15,7 @@ import com.yoprogramo.portfolio.service.IUsuarioService;
 import com.yoprogramo.portfolio.service.IdatosPersonalesService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,30 +46,43 @@ public class Controller {
     @Autowired
     private IProyectoService iProyectoService;
 //Usuario
-    @GetMapping("/usuario/traer") //GET -> Método HTTP para obtener información, end-point que se ejecuta al recibir una solicitud GET
+    @GetMapping("/api/usuario/traer") //GET -> Método HTTP para obtener información, end-point que se ejecuta al recibir una solicitud GET
     @ResponseBody // Retorna una Lista en formato JSON en el cuerpo de la respuesta
     public List<Usuario> getUsuarios(){
         return iUsuarioService.getUsuarios();
     }
-    @GetMapping("/usuario/traer/{id}")
+    @GetMapping("/api/usuario/traer/{id}")
     @ResponseBody
     public Usuario findUsuario(@PathVariable int id){
         return iUsuarioService.findUsuario(id);
     }
-    @PostMapping("/usuario/agregar") //POST -> Método HTTP para generar información para ser guardada
-    /* El método POST no envía valores mediante la URL, sino mediante el cuerpo o la cabecera de los mensajes HTTP.*/
-    public String createUsuario (@RequestBody Usuario usuario){
-        iUsuarioService.saveUsuario(usuario);
-        //devuelve un string avisando si se creó correctamente
-        return "Los nuevos datos han sido agregados correctamente.";
+    @GetMapping("/api/usuario/traer/{userName}/{password}")
+    @ResponseBody
+    public Usuario findUsuario(@PathVariable String userName, @PathVariable String password){
+        return iUsuarioService.findUsuario(userName, password);
     }
-    @DeleteMapping("/usuario/borrar/{id}") // DELETE -> Eliminar registro
+    //@CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/usuario/login")
+    //@ResponseBody
+    public Usuario findUsuario(@RequestBody Usuario usuario){
+        return iUsuarioService.findUsuario(usuario.getUserName(), usuario.getPassword());
+    }
+    @PostMapping("/api/usuario/agregar") //POST -> Método HTTP para generar información para ser guardada
+    /* El método POST no envía valores mediante la URL, sino mediante el cuerpo o la cabecera de los mensajes HTTP.*/
+    public int createUsuario (@RequestBody Usuario usuario){
+        iUsuarioService.saveUsuario(usuario);
+        return usuario.getId();
+        /*return iUsuarioService.getIdUsuario(usuario);*/
+        //devuelve un string avisando si se creó correctamente
+        /*return "Los nuevos datos han sido agregados correctamente.";*/
+    }
+    @DeleteMapping("/api/usuario/borrar/{id}") // DELETE -> Eliminar registro
     public String deleteUsuario (@PathVariable int id){
         iUsuarioService.deleteUsuario(id);
         //devuelve un string avisando si se eliminó correctamente
         return "El registro sido eliminado correctamente.";
     }
-    @PutMapping("/usuario/editar") // PUT -> Actualizar información en la DB
+    @PutMapping("/api/usuario/editar") // PUT -> Actualizar información en la DB
     public Usuario editUsuario (@RequestBody Usuario usuario){
         //Busco el registro
         Usuario datos = iUsuarioService.findUsuario(usuario.getId());
@@ -85,7 +99,7 @@ public class Controller {
         }
         return datos;
     }
-    @PutMapping("/usuario/editar/{id}") // PUT -> Actualizar información en la DB
+    @PutMapping("/api/usuario/editar/{id}") // PUT -> Actualizar información en la DB
     public Usuario editUsuario (@PathVariable int id,
             @RequestParam("userName") String nuevoUsername,
             @RequestParam("password") String nuevoPassword,
@@ -106,30 +120,31 @@ public class Controller {
         return datos;
     }
 //DatosPersonales   
-    @GetMapping("/datospersonales/traer") //GET -> Método HTTP para obtener información, end-point que se ejecuta al recibir una solicitud GET
+    @GetMapping("/api/datospersonales/traer") //GET -> Método HTTP para obtener información, end-point que se ejecuta al recibir una solicitud GET
     @ResponseBody // Retorna una Lista en formato JSON en el cuerpo de la respuesta
     public List<DatosPersonales> getDatosPersonales(){
         return iDatosPersonalesService.getDatosPersonales();
     }
-    @GetMapping("/datospersonales/traer/{id}")
+    @GetMapping("/api/datospersonales/traer/{id}")
     @ResponseBody
     public DatosPersonales findDatosPersonales(@PathVariable int id){
         return iDatosPersonalesService.findDatosPersonales(id);
     }
-    @PostMapping("/datospersonales/agregar") //POST -> Método HTTP para generar información para ser guardada
+    @PostMapping("/api/datospersonales/agregar") //POST -> Método HTTP para generar información para ser guardada
     /* El método POST no envía valores mediante la URL, sino mediante el cuerpo o la cabecera de los mensajes HTTP.*/
+    @ResponseBody
     public String createDatosPersonales(@RequestBody DatosPersonales datosPersonales){
         iDatosPersonalesService.saveDatosPersonales(datosPersonales);
         //devuelve un string avisando si se creó correctamente
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @DeleteMapping("/datospersonales/borrar/{id}") // DELETE -> Eliminar registro
+    @DeleteMapping("/api/datospersonales/borrar/{id}") // DELETE -> Eliminar registro
     public String deleteDatosPersonales(@PathVariable int id){
         iDatosPersonalesService.deleteDatosPersonales(id);
         //devuelve un string avisando si se eliminó correctamente
         return "El registro sido eliminado correctamente.";
     }
-    @PutMapping("/datospersonales/editar") // PUT -> Actualizar información en la DB
+    @PutMapping("/api/datospersonales/editar") // PUT -> Actualizar información en la DB
     public DatosPersonales editDatosPersonales (@RequestBody DatosPersonales datosPersonales){
         //Busco el registro
         DatosPersonales datos = iDatosPersonalesService.findDatosPersonales(datosPersonales.getId());
@@ -157,7 +172,7 @@ public class Controller {
         //Retorna el nuevo registro de datos personales
         return datos;
     }
-    @PutMapping("/datospersonales/editar/{id}") // PUT -> Actualizar información en la DB
+    @PutMapping("/api/datospersonales/editar/{id}") // PUT -> Actualizar información en la DB
     public DatosPersonales editDatosPersonales (@PathVariable int id,
             @RequestParam("nombre") String nuevoNombre,
             @RequestParam("apellido") String nuevoApellido,
@@ -194,28 +209,28 @@ public class Controller {
         return datos;
     }
 //Educacion   
-    @GetMapping("/educacion/traer")
+    @GetMapping("/api/educacion/traer")
     @ResponseBody
     public List<Educacion> getEducacion(){
         return iEducacionService.getEducacion();
     }
-    @GetMapping("/educacion/traer/{id}")
+    @GetMapping("/api/educacion/traer/{id}")
     @ResponseBody
     public Educacion findEducacion(@PathVariable int id){
         return iEducacionService.findEducacion(id);
     }
-    @PostMapping("/educacion/agregar") 
+    @PostMapping("/api/educacion/agregar") 
     public String createEducacion(@RequestBody Educacion educacion){
         iEducacionService.saveEducacion(educacion);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @DeleteMapping("/educacion/borrar/{id}")
+    @DeleteMapping("/api/educacion/borrar/{id}")
     public String deleteEducacion(@PathVariable int id){
         iEducacionService.deleteEducacion(id);
         return "El registro sido eliminado correctamente.";
     }
-    @PutMapping("/educacion/editar")
+    @PutMapping("/api/educacion/editar")
     public Educacion editEducacion (@RequestBody Educacion educacion){
 
         Educacion datos = iEducacionService.findEducacion(educacion.getId());
@@ -230,7 +245,7 @@ public class Controller {
 
         return datos;
     }
-    @PutMapping("/educacion/editar/{id}")
+    @PutMapping("/api/educacion/editar/{id}")
     public Educacion editEducacion (@PathVariable int id,
             @RequestParam("institucion") String nuevoInstitucion,
             @RequestParam("titulo") String nuevoTitulo,
@@ -252,28 +267,28 @@ public class Controller {
         return datos;
     }
 //ExperienciaLaboral  
-    @GetMapping("/experiencialaboral/traer")
+    @GetMapping("/api/experiencialaboral/traer")
     @ResponseBody
     public List<ExperienciaLaboral> getExperienciaLaboral(){
         return iExperienciaLaboralService.getExperienciaLaboral();
     }
-    @GetMapping("/experiencialaboral/traer/{id}")
+    @GetMapping("/api/experiencialaboral/traer/{id}")
     @ResponseBody
     public ExperienciaLaboral findExperienciaLaboral(@PathVariable int id){
         return iExperienciaLaboralService.findExperienciaLaboral(id);
     }
-    @PostMapping("/experiencialaboral/agregar") 
+    @PostMapping("/api/experiencialaboral/agregar") 
     public String createExperienciaLaboral(@RequestBody ExperienciaLaboral experienciaLaboral){
         iExperienciaLaboralService.saveExperienciaLaboral(experienciaLaboral);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @DeleteMapping("/experiencialaboral/borrar/{id}")
+    @DeleteMapping("/api/experiencialaboral/borrar/{id}")
     public String deleteExperienciaLaboral(@PathVariable int id){
         iExperienciaLaboralService.deleteExperienciaLaboral(id);
         return "El registro sido eliminado correctamente.";
     }
-    @PutMapping("/experiencialaboral/editar")
+    @PutMapping("/api/experiencialaboral/editar")
     public ExperienciaLaboral editExperienciaLaboral (@RequestBody ExperienciaLaboral experienciaLaboral){
 
         ExperienciaLaboral datos = iExperienciaLaboralService.findExperienciaLaboral(experienciaLaboral.getId());
@@ -290,7 +305,7 @@ public class Controller {
 
         return datos;
     }
-    @PutMapping("/experiencialaboral/editar/{id}")
+    @PutMapping("/api/experiencialaboral/editar/{id}")
     public ExperienciaLaboral editExperienciaLaboral (@PathVariable int id,
             @RequestParam("nombreEmpresa") String nuevoNombreEmpresa,
             @RequestParam("puesto") String nuevoPuesto,
@@ -313,28 +328,28 @@ public class Controller {
         return datos;
     }
 //Habilidades  
-    @GetMapping("/habilidades/traer")
+    @GetMapping("/api/habilidades/traer")
     @ResponseBody
     public List<Habilidades> getHabilidades(){
         return iHabilidadesService.getHabilidades();
     }
-    @GetMapping("/habilidades/traer/{id}")
+    @GetMapping("/api/habilidades/traer/{id}")
     @ResponseBody
     public Habilidades findHabilidades(@PathVariable int id){
         return iHabilidadesService.findHabilidades(id);
     }
-    @PostMapping("/habilidades/agregar") 
+    @PostMapping("/api/habilidades/agregar") 
     public String createHabilidades(@RequestBody Habilidades habilidades){
         iHabilidadesService.saveHabilidades(habilidades);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @DeleteMapping("/habilidades/borrar/{id}")
+    @DeleteMapping("/api/habilidades/borrar/{id}")
     public String deleteHabilidades(@PathVariable int id){
         iHabilidadesService.deleteHabilidades(id);
         return "El registro sido eliminado correctamente.";
     }
-    @PutMapping("/habilidades/editar")
+    @PutMapping("/api/habilidades/editar")
     public Habilidades editHabilidades (@RequestBody Habilidades habilidades){
 
         Habilidades datos = iHabilidadesService.findHabilidades(habilidades.getId());
@@ -348,7 +363,7 @@ public class Controller {
 
         return datos;
     }
-    @PutMapping("/habilidades/editar/{id}")
+    @PutMapping("/api/habilidades/editar/{id}")
     public Habilidades editHabilidades (@PathVariable int id,
             @RequestParam("descripcion") String nuevoDescripcion,
             @RequestParam("nivel") int nuevoNivel,
@@ -365,28 +380,28 @@ public class Controller {
         return datos;
     }
 //Proyecto 
-    @GetMapping("/proyecto/traer")
+    @GetMapping("/api/proyecto/traer")
     @ResponseBody
     public List<Proyecto> getProyectos(){
         return iProyectoService.getProyectos();
     }
-    @GetMapping("/proyecto/traer/{id}")
+    @GetMapping("/api/proyecto/traer/{id}")
     @ResponseBody
     public Proyecto findProyecto(@PathVariable int id){
         return iProyectoService.findProyecto(id);
     }
-    @PostMapping("/proyecto/agregar") 
+    @PostMapping("/api/proyecto/agregar") 
     public String createProyecto(@RequestBody Proyecto proyecto){
         iProyectoService.saveProyecto(proyecto);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @DeleteMapping("/proyecto/borrar/{id}")
+    @DeleteMapping("/api/proyecto/borrar/{id}")
     public String deleteProyecto(@PathVariable int id){
         iProyectoService.deleteProyecto(id);
         return "El registro sido eliminado correctamente.";
     }
-    @PutMapping("/proyecto/editar")
+    @PutMapping("/api/proyecto/editar")
     public Proyecto editProyecto (@RequestBody Proyecto proyecto){
 
         Proyecto datos = iProyectoService.findProyecto(proyecto.getId());
@@ -401,7 +416,7 @@ public class Controller {
 
         return datos;
     }
-    @PutMapping("/proyecto/editar/{id}")
+    @PutMapping("/api/proyecto/editar/{id}")
     public Proyecto editProyecto (@PathVariable int id,
             @RequestParam("proyecto") String nuevoProyecto,
             @RequestParam("descripcion") String nuevoDescripcion,

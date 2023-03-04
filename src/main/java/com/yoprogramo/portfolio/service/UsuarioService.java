@@ -16,8 +16,17 @@ public class UsuarioService implements IUsuarioService{
         return iUsuarioRepository.findAll();
     }
     @Override
+    public int getIdUsuario(Usuario usuario){
+        Usuario user = iUsuarioRepository.findByUserNameAndPassword(usuario.getUserName(), usuario.getPassword());
+        return user.getId();
+    }
+    @Override
     public Usuario findUsuario(int id){
         return iUsuarioRepository.findById(id).orElse(null);
+    }
+    @Override
+    public Usuario findUsuario(String userName, String password){
+        return iUsuarioRepository.findByUserNameAndPassword(userName, password);
     }
     @Override
     public void saveUsuario(Usuario usuario){
