@@ -15,13 +15,14 @@ import com.yoprogramo.portfolio.service.IUsuarioService;
 import com.yoprogramo.portfolio.service.IdatosPersonalesService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
  llama a las funciones que necesite de la capa service para generar una response.
 */
 @RestController //Anotación que determina la clase controladora -Permite redirigir las peticiones del cliente
+@CrossOrigin(origins="*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})    
 public class Controller {
+
     @Autowired //Permite la inyección de dependencias
     private IdatosPersonalesService iDatosPersonalesService;
     @Autowired
