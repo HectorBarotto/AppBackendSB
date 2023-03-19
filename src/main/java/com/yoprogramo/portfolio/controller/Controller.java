@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  llama a las funciones que necesite de la capa service para generar una response.
 */
 @RestController //Anotación que determina la clase controladora -Permite redirigir las peticiones del cliente
-@CrossOrigin(origins="*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})    
+@CrossOrigin(origins="*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})    
 public class Controller {
 
     @Autowired //Permite la inyección de dependencias
