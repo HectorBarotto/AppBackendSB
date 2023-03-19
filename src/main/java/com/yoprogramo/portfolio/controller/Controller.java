@@ -15,7 +15,7 @@ import com.yoprogramo.portfolio.service.IUsuarioService;
 import com.yoprogramo.portfolio.service.IdatosPersonalesService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,13 +61,13 @@ public class Controller {
     public Usuario findUsuario(@PathVariable String userName, @PathVariable String password){
         return iUsuarioService.findUsuario(userName, password);
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/usuario/login")
     //@ResponseBody
     public Usuario findUsuario(@RequestBody Usuario usuario){
         return iUsuarioService.findUsuario(usuario.getUserName(), usuario.getPassword());
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/usuario/agregar") //POST -> Método HTTP para generar información para ser guardada
     /* El método POST no envía valores mediante la URL, sino mediante el cuerpo o la cabecera de los mensajes HTTP.*/
     public int createUsuario (@RequestBody Usuario usuario){
@@ -77,14 +77,14 @@ public class Controller {
         //devuelve un string avisando si se creó correctamente
         /*return "Los nuevos datos han sido agregados correctamente.";*/
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @DeleteMapping("/api/usuario/borrar/{id}") // DELETE -> Eliminar registro
     public String deleteUsuario (@PathVariable int id){
         iUsuarioService.deleteUsuario(id);
         //devuelve un string avisando si se eliminó correctamente
         return "El registro sido eliminado correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/usuario/editar") // PUT -> Actualizar información en la DB
     public Usuario editUsuario (@RequestBody Usuario usuario){
         //Busco el registro
@@ -102,7 +102,7 @@ public class Controller {
         }
         return datos;
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/usuario/editar/{id}") // PUT -> Actualizar información en la DB
     public Usuario editUsuario (@PathVariable int id,
             @RequestParam("userName") String nuevoUsername,
@@ -134,7 +134,7 @@ public class Controller {
     public DatosPersonales findDatosPersonales(@PathVariable int id){
         return iDatosPersonalesService.findDatosPersonales(id);
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/datospersonales/agregar") //POST -> Método HTTP para generar información para ser guardada
     /* El método POST no envía valores mediante la URL, sino mediante el cuerpo o la cabecera de los mensajes HTTP.*/
     @ResponseBody
@@ -143,14 +143,14 @@ public class Controller {
         //devuelve un string avisando si se creó correctamente
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @DeleteMapping("/api/datospersonales/borrar/{id}") // DELETE -> Eliminar registro
     public String deleteDatosPersonales(@PathVariable int id){
         iDatosPersonalesService.deleteDatosPersonales(id);
         //devuelve un string avisando si se eliminó correctamente
         return "El registro sido eliminado correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/datospersonales/editar") // PUT -> Actualizar información en la DB
     public DatosPersonales editDatosPersonales (@RequestBody DatosPersonales datosPersonales){
         //Busco el registro
@@ -179,7 +179,7 @@ public class Controller {
         //Retorna el nuevo registro de datos personales
         return datos;
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/datospersonales/editar/{id}") // PUT -> Actualizar información en la DB
     public DatosPersonales editDatosPersonales (@PathVariable int id,
             @RequestParam("nombre") String nuevoNombre,
@@ -227,20 +227,20 @@ public class Controller {
     public Educacion findEducacion(@PathVariable int id){
         return iEducacionService.findEducacion(id);
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/educacion/agregar") 
     public String createEducacion(@RequestBody Educacion educacion){
         iEducacionService.saveEducacion(educacion);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @DeleteMapping("/api/educacion/borrar/{id}")
     public String deleteEducacion(@PathVariable int id){
         iEducacionService.deleteEducacion(id);
         return "El registro sido eliminado correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/educacion/editar")
     public Educacion editEducacion (@RequestBody Educacion educacion){
 
@@ -256,7 +256,7 @@ public class Controller {
 
         return datos;
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/educacion/editar/{id}")
     public Educacion editEducacion (@PathVariable int id,
             @RequestParam("institucion") String nuevoInstitucion,
@@ -289,20 +289,20 @@ public class Controller {
     public ExperienciaLaboral findExperienciaLaboral(@PathVariable int id){
         return iExperienciaLaboralService.findExperienciaLaboral(id);
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/experiencialaboral/agregar") 
     public String createExperienciaLaboral(@RequestBody ExperienciaLaboral experienciaLaboral){
         iExperienciaLaboralService.saveExperienciaLaboral(experienciaLaboral);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @DeleteMapping("/api/experiencialaboral/borrar/{id}")
     public String deleteExperienciaLaboral(@PathVariable int id){
         iExperienciaLaboralService.deleteExperienciaLaboral(id);
         return "El registro sido eliminado correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/experiencialaboral/editar")
     public ExperienciaLaboral editExperienciaLaboral (@RequestBody ExperienciaLaboral experienciaLaboral){
 
@@ -320,7 +320,7 @@ public class Controller {
 
         return datos;
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/experiencialaboral/editar/{id}")
     public ExperienciaLaboral editExperienciaLaboral (@PathVariable int id,
             @RequestParam("nombreEmpresa") String nuevoNombreEmpresa,
@@ -354,20 +354,20 @@ public class Controller {
     public Habilidades findHabilidades(@PathVariable int id){
         return iHabilidadesService.findHabilidades(id);
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/habilidades/agregar") 
     public String createHabilidades(@RequestBody Habilidades habilidades){
         iHabilidadesService.saveHabilidades(habilidades);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @DeleteMapping("/api/habilidades/borrar/{id}")
     public String deleteHabilidades(@PathVariable int id){
         iHabilidadesService.deleteHabilidades(id);
         return "El registro sido eliminado correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/habilidades/editar")
     public Habilidades editHabilidades (@RequestBody Habilidades habilidades){
 
@@ -382,7 +382,7 @@ public class Controller {
 
         return datos;
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/habilidades/editar/{id}")
     public Habilidades editHabilidades (@PathVariable int id,
             @RequestParam("descripcion") String nuevoDescripcion,
@@ -410,20 +410,20 @@ public class Controller {
     public Proyecto findProyecto(@PathVariable int id){
         return iProyectoService.findProyecto(id);
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PostMapping("/api/proyecto/agregar") 
     public String createProyecto(@RequestBody Proyecto proyecto){
         iProyectoService.saveProyecto(proyecto);
 
         return "Los nuevos datos han sido agregados correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @DeleteMapping("/api/proyecto/borrar/{id}")
     public String deleteProyecto(@PathVariable int id){
         iProyectoService.deleteProyecto(id);
         return "El registro sido eliminado correctamente.";
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/proyecto/editar")
     public Proyecto editProyecto (@RequestBody Proyecto proyecto){
 
@@ -439,7 +439,7 @@ public class Controller {
 
         return datos;
     }
-    @CrossOrigin(origins = "https://portfolio-hmb.web.app")
+    //@CrossOrigin(origins = "https://portfolio-hmb.web.app")
     @PutMapping("/api/proyecto/editar/{id}")
     public Proyecto editProyecto (@PathVariable int id,
             @RequestParam("proyecto") String nuevoProyecto,
